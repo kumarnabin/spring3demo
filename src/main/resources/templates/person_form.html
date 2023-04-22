@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Person Form</title>
+</head>
+<body>
+<h1>Add Person</h1>
+<form th:action="@{/web-api/persons}" method="post">
+    <input type="text" name="name">
+    <button>Save</button>
+</form>
+</body>
+</html>
