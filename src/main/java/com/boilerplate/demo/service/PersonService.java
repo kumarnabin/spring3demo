@@ -7,6 +7,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class PersonService {
@@ -26,5 +27,9 @@ public class PersonService {
         Person person = modelMapper.map(personRequest, Person.class);
 
         return personRepository.save(person);
+    }
+
+    public Person findById(Long id) {
+        return personRepository.findById(id).orElse(null);
     }
 }
