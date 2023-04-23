@@ -13,6 +13,8 @@ import lombok.NoArgsConstructor;
 public class TrainingResponse {
     @JsonProperty("id")
     private Long id;
+    @JsonProperty("personId")
+    private Long personId;
     @JsonProperty("name")
     private String name;
 

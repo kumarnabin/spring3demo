@@ -32,4 +32,18 @@ public class PersonService {
     public Person findById(Long id) {
         return personRepository.findById(id).orElse(null);
     }
+
+    public Person update(Long id, PersonRequest personRequest) {
+        Person existingPerson = personRepository.findById(id).orElse(null);
+        if (existingPerson != null) {
+            existingPerson.setName(personRequest.getName());
+            return personRepository.save(existingPerson);
+        } else {
+            return null;
+        }
+    }
+
+    public void deleteById(Long id) {
+        personRepository.deleteById(id);
+    }
 }

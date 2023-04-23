@@ -19,8 +19,4 @@ public class PersonRequest {
     @NotNull
     @Size(min = 2, max = 14)
     private String name;
-
-    public PersonRequest(Person person) {
-        name = person.getName();
-    }
 }
