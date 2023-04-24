@@ -1,6 +1,7 @@
 package com.boilerplate.demo.request;
 
 import com.boilerplate.demo.entity.Person;
+import com.boilerplate.demo.validation.Unique;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
