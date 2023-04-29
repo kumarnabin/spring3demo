@@ -1,21 +1,24 @@
 package com.boilerplate.demo.service;
 
 import com.boilerplate.demo.entity.Person;
+import com.boilerplate.demo.entity.Skill;
+import com.boilerplate.demo.mapper.IdEntityMapper;
 import com.boilerplate.demo.repository.PersonRepository;
 import com.boilerplate.demo.request.PersonRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
+    private final IdEntityMapper idEntityMapper;
     private final ModelMapper modelMapper;
 
-    public PersonService(PersonRepository personRepository, ModelMapper modelMapper) {
+    public PersonService(PersonRepository personRepository, IdEntityMapper idEntityMapper, ModelMapper modelMapper) {
         this.personRepository = personRepository;
+        this.idEntityMapper = idEntityMapper;
         this.modelMapper = modelMapper;
     }
 
@@ -25,7 +28,8 @@ public class PersonService {
 
     public Person save(PersonRequest personRequest) {
         Person person = modelMapper.map(personRequest, Person.class);
-
+        List<Skill> skills = idEntityMapper.toEntityList(personRequest.getSkills(),Skill.class);
+        person.setSkills(skills);
         return personRepository.save(person);
     }
 

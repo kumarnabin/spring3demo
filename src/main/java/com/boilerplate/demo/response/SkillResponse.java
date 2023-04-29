@@ -9,11 +9,10 @@ import lombok.*;
 @NoArgsConstructor
 @Setter
 @Getter
-public class TrainingResponse {
+public class SkillResponse {
     @JsonProperty("id")
     private Long id;
-    @JsonProperty("personId")
-    private Long personId;
+
     @JsonProperty("name")
     private String name;
 

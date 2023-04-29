@@ -1,5 +1,6 @@
 package com.boilerplate.demo.entity;
 
+import com.boilerplate.demo.service.PersonService;
 import jakarta.persistence.*;
 import lombok.Builder;
 
@@ -19,19 +20,18 @@ public class Person {
     @OneToMany(mappedBy = "person")
     private List<Training> trainings;
 
+    @ManyToMany(mappedBy = "persons")
+    private List<Skill> skills;
+
 
     public Person() {
     }
 
-    public Person(Long id, String name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Person(Long id, String name, List<Training> trainings) {
+    public Person(Long id, String name, List<Training> trainings, List<Skill> skills) {
         this.id = id;
         this.name = name;
         this.trainings = trainings;
+        this.skills = skills;
     }
 
     public void setId(Long id) {
@@ -56,5 +56,13 @@ public class Person {
 
     public void setTrainings(List<Training> trainings) {
         this.trainings = trainings;
+    }
+
+    public List<Skill> getSkills() {
+        return skills;
+    }
+
+    public void setSkills(List<Skill> skills) {
+        this.skills = skills;
     }
 }
