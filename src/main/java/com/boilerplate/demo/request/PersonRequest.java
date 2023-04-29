@@ -18,5 +18,6 @@ public class PersonRequest {
     @NotNull
     @Size(min = 2, max = 14)
     private String name;
+    private List<String> trainings;
     private List<Long> skills;
 }

@@ -9,6 +9,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class TrainingService {
@@ -49,5 +50,18 @@ public class TrainingService {
 
     public void deleteById(Long id) {
         trainingRepository.deleteById(id);
+    }
+
+    public Training findOrCreateTraining(Person person, String name) {
+        Optional<Training> trainingOptional = trainingRepository.findFirstByPersonAndName(person, name.trim());
+        Training training;
+        if (trainingOptional.isPresent()) {
+            return trainingOptional.get();
+        } else {
+            training = new Training();
+            training.setPerson(person);
+            training.setName(name.trim());
+            return trainingRepository.save(training);
+        }
     }
 }

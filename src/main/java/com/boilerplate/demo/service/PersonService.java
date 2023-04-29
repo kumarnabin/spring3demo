@@ -2,23 +2,27 @@ package com.boilerplate.demo.service;
 
 import com.boilerplate.demo.entity.Person;
 import com.boilerplate.demo.entity.Skill;
+import com.boilerplate.demo.entity.Training;
 import com.boilerplate.demo.mapper.IdEntityMapper;
 import com.boilerplate.demo.repository.PersonRepository;
 import com.boilerplate.demo.request.PersonRequest;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PersonService {
     private final PersonRepository personRepository;
     private final IdEntityMapper idEntityMapper;
+    private final TrainingService trainingService;
     private final ModelMapper modelMapper;
 
-    public PersonService(PersonRepository personRepository, IdEntityMapper idEntityMapper, ModelMapper modelMapper) {
+    public PersonService(PersonRepository personRepository, IdEntityMapper idEntityMapper, TrainingService trainingService, ModelMapper modelMapper) {
         this.personRepository = personRepository;
         this.idEntityMapper = idEntityMapper;
+        this.trainingService = trainingService;
         this.modelMapper = modelMapper;
     }
 
@@ -28,9 +32,15 @@ public class PersonService {
 
     public Person save(PersonRequest personRequest) {
         Person person = modelMapper.map(personRequest, Person.class);
-        List<Skill> skills = idEntityMapper.toEntityList(personRequest.getSkills(),Skill.class);
+        List<Skill> skills = idEntityMapper.toEntityList(personRequest.getSkills(), Skill.class);
         person.setSkills(skills);
-        return personRepository.save(person);
+        person = personRepository.save(person);
+        List<Training> trainings = new ArrayList<>();
+        for (String name : personRequest.getTrainings()) {
+            trainings.add(trainingService.findOrCreateTraining(person, name));
+        }
+        person.setTrainings(trainings);
+        return person;
     }
 
     public Person findById(Long id) {
